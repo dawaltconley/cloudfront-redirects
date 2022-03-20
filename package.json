@@ -1,0 +1,19 @@
+{
+  "name": "cloudfront-redirects",
+  "version": "1.0.0",
+  "description": "CloudFront functions for handling most common URL redirects for static sites.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Dylan Awalt-Conley",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.17.8",
+    "@babel/eslint-parser": "^7.17.0",
+    "@babel/plugin-syntax-top-level-await": "^7.14.5",
+    "@babel/preset-env": "^7.16.11",
+    "eslint": "^8.11.0"
+  }
+}
