@@ -19,7 +19,7 @@ export default async () => {
             [name]: {
                 Type: 'AWS::CloudFront::Function',
                 Properties: {
-                    Name: name,
+                    Name: { 'Fn::Sub': '${AWS::StackName}-' + name },
                     AutoPublish: true,
                     FunctionConfig: {
                         Comment: '',
