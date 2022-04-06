@@ -3,11 +3,10 @@
   "version": "1.0.0",
   "description": "CloudFront functions for handling most common URL redirects for static sites.",
   "main": "index.js",
-  "type": "module",
   "scripts": {
-    "create": "node update-stack --create",
-    "update": "node update-stack",
-    "write": "node update-stack --file",
+    "create": "node update-stack.mjs --create",
+    "update": "node update-stack.mjs",
+    "write": "node update-stack.mjs --file",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "Dylan Awalt-Conley",

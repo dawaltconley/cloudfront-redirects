@@ -1,5 +1,5 @@
 import { promises as fsp } from 'fs';
-import makeStack from './index.js';
+import makeStack from './index.mjs';
 import { CloudFormationClient, CreateStackCommand, UpdateStackCommand } from '@aws-sdk/client-cloudformation';
 
 const mode = process.argv[2];
