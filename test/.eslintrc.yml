@@ -1,0 +1,17 @@
+parser: '@babel/eslint-parser'
+env:
+  browser: false
+  commonjs: false
+  es6: true
+  node: true
+  mocha: true
+extends: 'eslint:recommended'
+globals:
+  Atomics: readonly
+  SharedArrayBuffer: readonly
+parserOptions:
+  ecmaVersion: 2021
+rules:
+  no-unused-vars: warn
+  semi: off
+  # no-semi: warn
