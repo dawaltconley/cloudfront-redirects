@@ -9,16 +9,16 @@ const { itProduces } = new RedirectTests(handler)
 describe('CleanUrlsNoSlash', () => {
     describe('should return the index document for valid urls', () => {
         itProduces('www.example.com', '', mkEvent('www.example.com', '/index.html').request)
+        itProduces('www.example.com', '/', mkEvent('www.example.com', '/index.html').request)
         itProduces('example.com', '/foo', mkEvent('example.com', '/foo/index.html').request)
         itProduces('m.example.com', '/bar/baz', mkEvent('m.example.com', '/bar/baz/index.html').request)
     })
     describe('should trim an index document from the uri', () => {
-        itProduces('example.com', '/index.html', mkRedirect(''))
+        itProduces('example.com', '/index.html', mkRedirect('/'))
         itProduces('api.example.com', '/foo/index.html', mkRedirect('/foo'))
         itProduces('www.example.com', '/bar/baz/index.html', mkRedirect('/bar/baz'))
     })
     describe('should trim a trailing slash', () => {
-        itProduces('www.example.com', '/', mkRedirect(''))
         itProduces('m.example.com', '/foo/', mkRedirect('/foo'))
         itProduces('example.com', '/bar/baz/', mkRedirect('/bar/baz'))
     })

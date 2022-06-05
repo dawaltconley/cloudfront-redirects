@@ -19,9 +19,10 @@ function handler(event) {
     } else if (uri.endsWith('/' + indexDocument)) {
         // trim index document
         uri = uri.slice(0, -indexDocument.length - 1);
+        if (!uri) uri = '/';
     }
 
-    if (uri !== request.uri) {
+    if (uri && uri !== request.uri) {
         // redirect if uri has changed
         return {
             statusCode: 301,
@@ -32,7 +33,7 @@ function handler(event) {
 
     if (!request.uri.includes('.')) {
         // add trailing slash
-        request.uri += `/${indexDocument}`;
+        request.uri = `${uri}/${indexDocument}`;
     }
     return request;
 }
