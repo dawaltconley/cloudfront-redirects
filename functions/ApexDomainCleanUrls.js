@@ -10,7 +10,7 @@ function redirect(uri) {
 
 function handler(event) {
     var request = event.request;
-    var uri = request.uri;
+    var uri = request.uri || '/';
     var host = request.headers.host.value;
     var subdomains = host.split('.');
 
@@ -25,7 +25,7 @@ function handler(event) {
 
     if (uri.endsWith('/')) {
         // add index document and return properly-formatted requests
-        request.uri += indexDocument;
+        request.uri = uri + indexDocument;
         return request;
     } else if (uri.endsWith('/' + indexDocument)) {
         // trim index document
