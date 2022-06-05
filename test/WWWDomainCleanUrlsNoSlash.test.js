@@ -9,16 +9,16 @@ const { itProduces } = new RedirectTests(handler)
 describe('WWWDomainCleanUrlsNoSlash', () => {
     describe('should return the index document for valid urls', () => {
         itProduces('www.example.com', '', mkEvent('www.example.com', '/index.html').request)
+        itProduces('www.example.com', '/', mkEvent('www.example.com', '/index.html').request)
         itProduces('www.example.com', '/foo', mkEvent('www.example.com', '/foo/index.html').request)
         itProduces('www.example.com', '/bar/baz', mkEvent('www.example.com', '/bar/baz/index.html').request)
     })
     describe('should trim an index document from the uri', () => {
-        itProduces('www.example.com', '/index.html', mkRedirect(''))
+        itProduces('www.example.com', '/index.html', mkRedirect('/'))
         itProduces('www.example.com', '/foo/index.html', mkRedirect('/foo'))
         itProduces('www.example.com', '/bar/baz/index.html', mkRedirect('/bar/baz'))
     })
     describe('should trim a trailing slash', () => {
-        itProduces('www.example.com', '/', mkRedirect(''))
         itProduces('www.example.com', '/foo/', mkRedirect('/foo'))
         itProduces('www.example.com', '/bar/baz/', mkRedirect('/bar/baz'))
     })

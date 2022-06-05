@@ -14,17 +14,20 @@ function handler(event) {
 
     if (uri.endsWith('/')) {
         // trim trailing slash
-        return redirect(uri.slice(0, -1));
+        uri = uri.slice(0, -1);
+    } else if (uri.endsWith('/' + indexDocument)) {
+        // trim index document
+        uri = uri.slice(0, -indexDocument.length - 1);
+        if (!uri) uri = '/';
     }
 
-    if (uri.endsWith('/' + indexDocument)) {
-        // trim index document
-        return redirect(uri.slice(0, -indexDocument.length - 1));
+    if (uri && uri !== request.uri) {
+        return redirect(uri);
     }
 
     if (!request.uri.includes('.')) {
         // add index document and return properly-formatted requests
-        request.uri += `/${indexDocument}`;
+        request.uri = `${uri}/${indexDocument}`;
     }
     return request;
 }

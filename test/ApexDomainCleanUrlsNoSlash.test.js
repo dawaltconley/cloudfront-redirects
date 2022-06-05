@@ -9,16 +9,16 @@ const { itProduces } = new RedirectTests(handler)
 describe('ApexDomainCleanUrlsNoSlash', () => {
     describe('should return the index document for valid urls', () => {
         itProduces('example.com', '', mkEvent('example.com', '/index.html').request)
+        itProduces('example.com', '/', mkEvent('example.com', '/index.html').request)
         itProduces('example.com', '/foo', mkEvent('example.com', '/foo/index.html').request)
         itProduces('example.com', '/bar/baz', mkEvent('example.com', '/bar/baz/index.html').request)
     })
     describe('should trim an index document from the uri', () => {
-        itProduces('example.com', '/index.html', mkRedirect(''))
+        itProduces('example.com', '/index.html', mkRedirect('/'))
         itProduces('example.com', '/foo/index.html', mkRedirect('/foo'))
         itProduces('example.com', '/bar/baz/index.html', mkRedirect('/bar/baz'))
     })
     describe('should trim a trailing slash', () => {
-        itProduces('example.com', '/', mkRedirect(''))
         itProduces('example.com', '/foo/', mkRedirect('/foo'))
         itProduces('example.com', '/bar/baz/', mkRedirect('/bar/baz'))
     })
