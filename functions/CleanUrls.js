@@ -10,11 +10,11 @@ function redirect(uri) {
 
 function handler(event) {
     var request = event.request;
-    var uri = request.uri;
+    var uri = request.uri || '/';
 
     if (uri.endsWith('/')) {
         // add index document and return properly-formatted requests
-        request.uri += indexDocument;
+        request.uri = uri + indexDocument;
         return request;
     }
 
