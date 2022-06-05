@@ -1,33 +1,16 @@
 const rewire = require('rewire')
-const assert = require('assert').strict
+const { RedirectTests, mkEvent, mkRedirect } = require('./utilities')
 
 const fn = rewire('../functions/WWWDomain.js')
 const handler = fn.__get__('handler')
 
-const mkRedirect = (uri) => ({
-    statusCode: 301,
-    statusDescription: 'Moved Permanently',
-    headers: { location: { value: uri } },
-})
-
-const mkEvent = (host, uri) => ({
-    request: {
-        uri: uri,
-        headers: {
-            host: {
-                value: host
-            }
-        }
-    }
-})
-
-const produces = (host, uri, result) => assert.deepEqual(handler(mkEvent(host, uri)), result)
+const { itProduces } = new RedirectTests(handler)
 
 describe('WWWDomain', () => {
-    it('should redirect to the primary subdomain', () => {
-        produces('example.com', '/', mkRedirect('https://www.example.com/'))
-        produces('api.example.com', '/foo', mkRedirect('https://www.example.com/foo'))
-        produces('www.foo.example.com', '/index.html', mkRedirect('https://www.example.com/index.html'))
-        produces('www.m.example.com', '/assets/img.jpeg', mkRedirect('https://www.example.com/assets/img.jpeg'))
+    describe('should redirect to the primary subdomain', () => {
+        itProduces('example.com', '/', mkRedirect('https://www.example.com/'))
+        itProduces('api.example.com', '/foo', mkRedirect('https://www.example.com/foo'))
+        itProduces('www.foo.example.com', '/index.html', mkRedirect('https://www.example.com/index.html'))
+        itProduces('www.m.example.com', '/assets/img.jpeg', mkRedirect('https://www.example.com/assets/img.jpeg'))
     })
 })
