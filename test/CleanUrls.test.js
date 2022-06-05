@@ -1,50 +1,33 @@
 const rewire = require('rewire')
-const assert = require('assert').strict
+const { RedirectTests, mkEvent, mkRedirect } = require('./utilities')
 
 const fn = rewire('../functions/CleanUrls.js')
 const handler = fn.__get__('handler')
 
-const mkRedirect = (uri) => ({
-    statusCode: 301,
-    statusDescription: 'Moved Permanently',
-    headers: { location: { value: uri } },
-})
-
-const mkEvent = (host, uri) => ({
-    request: {
-        uri: uri,
-        headers: {
-            host: {
-                value: host
-            }
-        }
-    }
-})
-
-const produces = (host, uri, result) => assert.deepEqual(handler(mkEvent(host, uri)), result)
+const { itProduces } = new RedirectTests(handler)
 
 describe('CleanUrls', () => {
-    it('should return the index document for valid urls', () => {
-        produces('www.example.com', '/', mkEvent('www.example.com', '/index.html').request)
-        produces('example.com', '/foo/', mkEvent('example.com', '/foo/index.html').request)
-        produces('m.example.com', '/bar/baz/', mkEvent('m.example.com', '/bar/baz/index.html').request)
+    describe('should return the index document for valid urls', () => {
+        itProduces('www.example.com', '/', mkEvent('www.example.com', '/index.html').request)
+        itProduces('example.com', '/foo/', mkEvent('example.com', '/foo/index.html').request)
+        itProduces('m.example.com', '/bar/baz/', mkEvent('m.example.com', '/bar/baz/index.html').request)
     })
-    it('should trim an index document from the uri', () => {
-        produces('example.com', '/index.html', mkRedirect('/'))
-        produces('api.example.com', '/foo/index.html', mkRedirect('/foo/'))
-        produces('www.example.com', '/bar/baz/index.html', mkRedirect('/bar/baz/'))
+    describe('should trim an index document from the uri', () => {
+        itProduces('example.com', '/index.html', mkRedirect('/'))
+        itProduces('api.example.com', '/foo/index.html', mkRedirect('/foo/'))
+        itProduces('www.example.com', '/bar/baz/index.html', mkRedirect('/bar/baz/'))
     })
-    it('should add a missing trailing slash', () => {
-        produces('www.example.com', '', mkRedirect('/'))
-        produces('m.example.com', '/foo', mkRedirect('/foo/'))
-        produces('example.com', '/bar/baz', mkRedirect('/bar/baz/'))
+    describe('should add a missing trailing slash', () => {
+        itProduces('www.example.com', '', mkRedirect('/'))
+        itProduces('m.example.com', '/foo', mkRedirect('/foo/'))
+        itProduces('example.com', '/bar/baz', mkRedirect('/bar/baz/'))
     })
-    it('should not affect file uris', () => {
+    describe('should not affect file uris', () => {
         let args = [ 'example.com', '/main.css' ]
-        produces(...args, mkEvent(...args).request)
+        itProduces(...args, mkEvent(...args).request)
         args = [ 'm.example.com', '/js/foo.js' ]
-        produces(...args, mkEvent(...args).request)
+        itProduces(...args, mkEvent(...args).request)
         args = [ 'www.example.com', '/assets/generated/test.jpeg' ];
-        produces(...args, mkEvent(...args).request)
+        itProduces(...args, mkEvent(...args).request)
     })
 })
