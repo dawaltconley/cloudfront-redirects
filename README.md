@@ -1,6 +1,6 @@
 # CloudFront Redirects
 
-This provides a number of CloudFront Functions for handling the most common URL redirects.
+This provides a number of AWS CloudFront Functions for handling the most common URL redirects.
 
 ## Functions
 
@@ -16,9 +16,20 @@ This stack also provides the following functions, which combine the functionalit
 - WWWDomainCleanUrls
 - WWWDomainCleanUrlsNoSlash
 
-## Commands
+## Usage
 
-You can change the stack name by editing the `config.json` file.
+Install by cloning this repo or downloading the latest [release](https://github.com/dawaltconley/cloudfront-redirects/releases).
+
+```sh
+git clone https://github.com/dawaltconley/cloudfront-redirects.git
+cd cloudfront-redirects
+npm install
+npm run create
+```
+
+By default, this will create a new AWS CloudFormation stack named `UrlRedirects` containing all of the included functions. You can change the stack name by editing the `config.json` file.
+
+### Commands
 
 `npm run create` creates a new stack.
 
