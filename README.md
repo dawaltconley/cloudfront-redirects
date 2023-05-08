@@ -18,7 +18,7 @@ This stack also provides the following functions, which combine the functionalit
 
 ## Usage
 
-Install by cloning this repo or downloading the latest [release](https://github.com/dawaltconley/cloudfront-redirects/releases).
+Install by cloning this repo or downloading the latest [release](https://github.com/dawaltconley/cloudfront-redirects/tags).
 
 ```sh
 git clone https://github.com/dawaltconley/cloudfront-redirects.git
